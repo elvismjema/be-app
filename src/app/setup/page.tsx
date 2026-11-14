@@ -73,7 +73,12 @@ export default function SetupPage() {
                 {copied ? <><Check className="w-4 h-4" /> Copied!</> : <>Copy invite link</>}
               </button>
 
-              <p className="text-xs text-white/25">Once they open it and sign up, your space opens automatically.</p>
+              <div className="pt-1 border-t border-white/5">
+                <button onClick={() => window.location.href = '/demo'}
+                  className="w-full text-white/40 hover:text-white/70 text-sm py-2 transition-colors">
+                  Enter your space now →
+                </button>
+              </div>
             </>
           )}
         </div>

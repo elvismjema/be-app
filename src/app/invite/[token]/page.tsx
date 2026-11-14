@@ -59,7 +59,7 @@ export default function InvitePage() {
     const { data: invite } = await supabase.from('invitations').select('*').eq('token', token).single()
     if (!invite) { setStatus('error'); setError('Invite not found.'); return }
 
-    const { error: coupleError } = await supabase.from('couples').insert({ user1_id: invite.inviter_id, user2_id: user.id })
+    const { error: coupleError } = await supabase.from('couples').insert({ user1_id: user.id, user2_id: invite.inviter_id })
     if (coupleError) { setStatus('error'); setError(coupleError.message); return }
 
     await supabase.from('invitations').update({ accepted: true }).eq('id', invite.id)
