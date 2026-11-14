@@ -16,6 +16,7 @@ interface DemoState {
 export interface DemoNames {
   myName: string
   partnerName: string
+  partnerTimezone?: string | null
 }
 
 export function loadNames(): DemoNames | null {

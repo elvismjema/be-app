@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { loadDemo, saveDemo, loadNames } from '@/hooks/demo/demoStore'
+import type { DemoNames } from '@/hooks/demo/demoStore'
 import { useDemoTodos } from '@/hooks/demo/useDemoTodos'
 import { useDemoCalendar } from '@/hooks/demo/useDemoCalendar'
 import { useDemoJournal } from '@/hooks/demo/useDemoJournal'
@@ -28,9 +29,10 @@ type CenterTab = 'moments' | 'chat' | 'vault'
 
 export function DemoDashboard() {
   const demo = loadDemo()
-  const names = loadNames()
-  const myName = names?.myName || 'You'
-  const partnerName = names?.partnerName || 'Her'
+  const [names, setNames] = useState<DemoNames>(() => loadNames() || { myName: 'You', partnerName: 'Her', partnerTimezone: null })
+  const myName = names.myName
+  const partnerName = names.partnerName
+  const partnerTimezone = names.partnerTimezone || null
   const [couple, setCouple] = useState<Couple>(demo.couple)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [centerTab, setCenterTab] = useState<CenterTab>('moments')
@@ -102,7 +104,7 @@ export function DemoDashboard() {
               <ClockWidget
                 myName={myName}
                 partnerName={partnerName}
-                partnerTimezone="America/New_York"
+                partnerTimezone={partnerTimezone}
                 partnerLastSeen={new Date(Date.now() - 420000).toISOString()}
               />
             </div>
@@ -190,8 +192,8 @@ export function DemoDashboard() {
       </div>
 
       {settingsOpen && (
-        <DemoSettingsModal couple={couple} onClose={() => setSettingsOpen(false)}
-          onUpdateMeetups={updateMeetupDates} />
+        <DemoSettingsModal couple={couple} names={names} onClose={() => setSettingsOpen(false)}
+          onUpdateMeetups={updateMeetupDates} onUpdateNames={setNames} />
       )}
     </div>
   )
