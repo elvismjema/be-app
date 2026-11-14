@@ -21,7 +21,7 @@ export default function SetupPage() {
 
     const { data, error } = await supabase
       .from('invitations')
-      .insert({ inviter_id: user.id, email: user.email! })
+      .insert({ inviter_id: user.id, email: user.email ?? `anon-${user.id}@be.local` })
       .select()
       .single()
 

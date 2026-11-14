@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { loadDemo, saveDemo } from '@/hooks/demo/demoStore'
+import { loadDemo, saveDemo, loadNames } from '@/hooks/demo/demoStore'
 import { useDemoTodos } from '@/hooks/demo/useDemoTodos'
 import { useDemoCalendar } from '@/hooks/demo/useDemoCalendar'
 import { useDemoJournal } from '@/hooks/demo/useDemoJournal'
@@ -28,6 +28,9 @@ type CenterTab = 'moments' | 'chat' | 'vault'
 
 export function DemoDashboard() {
   const demo = loadDemo()
+  const names = loadNames()
+  const myName = names?.myName || 'You'
+  const partnerName = names?.partnerName || 'Her'
   const [couple, setCouple] = useState<Couple>(demo.couple)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [centerTab, setCenterTab] = useState<CenterTab>('moments')
@@ -80,8 +83,8 @@ export function DemoDashboard() {
               <span className="text-xs text-amber-500/80">Demo mode</span>
             </div>
             <div className="flex items-center gap-2 glass rounded-full px-3 py-1.5">
-              <div className="w-5 h-5 rounded-full bg-gradient-to-br from-blue-400 to-[#c9a87c] flex items-center justify-center text-xs font-medium text-white">H</div>
-              <span className="text-xs text-white/50">Her</span>
+              <div className="w-5 h-5 rounded-full bg-gradient-to-br from-blue-400 to-[#c9a87c] flex items-center justify-center text-xs font-medium text-white">{partnerName[0]?.toUpperCase()}</div>
+              <span className="text-xs text-white/50">{partnerName}</span>
               <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
             </div>
             <button onClick={() => setSettingsOpen(true)}
@@ -97,8 +100,8 @@ export function DemoDashboard() {
           <div className="space-y-4">
             <div className="glass rounded-2xl p-6">
               <ClockWidget
-                myName="You"
-                partnerName="Her"
+                myName={myName}
+                partnerName={partnerName}
                 partnerTimezone="America/New_York"
                 partnerLastSeen={new Date(Date.now() - 420000).toISOString()}
               />
@@ -149,7 +152,7 @@ export function DemoDashboard() {
                 <ChatWidget
                   messages={messages}
                   currentUserId="me"
-                  partnerName="Her"
+                  partnerName={partnerName}
                   onSend={(content) => sendMessage(content, 'me')}
                   bottomRef={bottomRef}
                 />
@@ -175,7 +178,7 @@ export function DemoDashboard() {
                 onAdd={(title) => addTodo(title)} onToggle={toggleTodo} onDelete={deleteTodo} />
             </div>
             <div className="glass rounded-2xl p-4">
-              <JournalWidget entries={entries} currentUserId="me" partnerName="Her"
+              <JournalWidget entries={entries} currentUserId="me" partnerName={partnerName}
                 onAdd={(content, mood) => addEntry(content, mood)} />
             </div>
           </div>

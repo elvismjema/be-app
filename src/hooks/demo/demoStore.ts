@@ -1,6 +1,7 @@
 import type { Todo, CalendarEvent, JournalEntry, Moment, Couple } from '@/types'
 
 const KEY = 'locket_demo'
+const NAMES_KEY = 'locket_names'
 
 interface DemoState {
   todos: Todo[]
@@ -10,6 +11,27 @@ interface DemoState {
   couple: Couple
   nextMeetup: string | null
   lastMeetup: string | null
+}
+
+export interface DemoNames {
+  myName: string
+  partnerName: string
+}
+
+export function loadNames(): DemoNames | null {
+  if (typeof window === 'undefined') return null
+  try {
+    const raw = localStorage.getItem(NAMES_KEY)
+    if (!raw) return null
+    return JSON.parse(raw)
+  } catch {
+    return null
+  }
+}
+
+export function saveNames(names: DemoNames) {
+  if (typeof window === 'undefined') return
+  localStorage.setItem(NAMES_KEY, JSON.stringify(names))
 }
 
 const DEFAULT: DemoState = {
