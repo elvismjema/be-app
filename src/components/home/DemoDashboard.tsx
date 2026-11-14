@@ -186,7 +186,36 @@ export function DemoDashboard() {
           </div>
         </div>
 
-        <p className="text-center text-white/15 text-xs mt-8">
+        {/* Activities */}
+        <div className="mt-6">
+          <p className="text-xs text-white/30 uppercase tracking-wider mb-3">Activities</p>
+          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+            <a href="/quiz"
+              className="glass hover:bg-white/8 rounded-2xl p-4 flex flex-col gap-2 min-w-[160px] transition-all group shrink-0">
+              <span className="text-2xl">🧠</span>
+              <div>
+                <p className="text-sm font-medium text-white/80 group-hover:text-white transition-colors">Personality Quiz</p>
+                <p className="text-xs text-white/35 mt-0.5">Find out your type</p>
+              </div>
+            </a>
+            <div className="glass rounded-2xl p-4 flex flex-col gap-2 min-w-[160px] opacity-40 cursor-not-allowed shrink-0">
+              <span className="text-2xl">💬</span>
+              <div>
+                <p className="text-sm font-medium text-white/80">Truth or Dare</p>
+                <p className="text-xs text-white/35 mt-0.5">Coming soon</p>
+              </div>
+            </div>
+            <div className="glass rounded-2xl p-4 flex flex-col gap-2 min-w-[160px] opacity-40 cursor-not-allowed shrink-0">
+              <span className="text-2xl">❓</span>
+              <div>
+                <p className="text-sm font-medium text-white/80">How well do you know me?</p>
+                <p className="text-xs text-white/35 mt-0.5">Coming soon</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p className="text-center text-white/15 text-xs mt-6">
           Demo mode — everything saves to your browser. No account needed.
         </p>
       </div>
